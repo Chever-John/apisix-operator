@@ -101,4 +101,3 @@ limitations under the License.
 [apisix]:https://apisix.apache.org/
 [k8soperator]:https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
 [kind]:https://sigs.k8s.io/kind
-
