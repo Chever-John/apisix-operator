@@ -16,4 +16,22 @@ resources:
   kind: APISIXConfiguration
   path: github.com/chever-john/apisix-operator/api/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: apisix-operator.apisix.apache.org
+  group: apisix-operator
+  kind: DataPlane
+  path: github.com/chever-john/apisix-operator/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: apisix-operator.apisix.apache.org
+  group: apisix-operator
+  kind: ControlPlane
+  path: github.com/chever-john/apisix-operator/api/v1alpha1
+  version: v1alpha1
 version: "3"

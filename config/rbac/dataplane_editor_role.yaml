@@ -1,0 +1,24 @@
+# permissions for end users to edit dataplanes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dataplane-editor-role
+rules:
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - dataplanes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - dataplanes/status
+  verbs:
+  - get
