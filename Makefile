@@ -125,14 +125,14 @@ docker-build: test ## Build docker image with the manager.
 .PHONY: docker-build-dev
 docker-build-dev: test
 	docker build -t ${IMG} .
-	dokcer tag ${IMG} ${REGISTRY}/${IMG}
+	docker tag ${IMG} ${REGISTRY}/${IMG}
 
 .PHONY: docker-push
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
 
 .PHONY: docker-push-dev
-docker-push: ## Push docker image with the manager.
+docker-push-dev: ## Push docker image with the manager.
 	docker push ${REGISTRY}/${IMG}
 
 ##@ Deployment
@@ -155,7 +155,7 @@ deploy: manifests kustomize ## Deploy controller to the K8s cluster specified in
 	$(KUSTOMIZE) build config/default | kubectl apply -f -
 
 .PHONY: deploy-dev
-deploy: manifests kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
+deploy-dev: manifests kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
 	cd config/manager && $(KUSTOMIZE) edit set image controller=${REGISTRY}/${IMG}
 	$(KUSTOMIZE) build config/default | kubectl apply -f -
 
