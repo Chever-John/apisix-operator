@@ -1,0 +1,9 @@
+domain: apisix-operator.apisix.apache.org
+layout:
+- go.kubebuilder.io/v4-alpha
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: apisix-operator
+repo: github.com/chever-john/apisix-operator
+version: "3"
