@@ -1,0 +1,24 @@
+# permissions for end users to edit apisixconfigurations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: apisixconfiguration-editor-role
+rules:
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - apisixconfigurations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - apisixconfigurations/status
+  verbs:
+  - get

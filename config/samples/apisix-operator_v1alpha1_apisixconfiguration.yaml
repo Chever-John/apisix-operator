@@ -1,0 +1,6 @@
+apiVersion: apisix-operator.apisix-operator.apisix.apache.org/v1alpha1
+kind: APISIXConfiguration
+metadata:
+  name: apisixconfiguration-sample
+spec:
+  # TODO(user): Add fields here

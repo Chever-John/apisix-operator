@@ -6,4 +6,14 @@ plugins:
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: apisix-operator
 repo: github.com/chever-john/apisix-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: apisix-operator.apisix.apache.org
+  group: apisix-operator
+  kind: APISIXConfiguration
+  path: github.com/chever-john/apisix-operator/api/v1alpha1
+  version: v1alpha1
 version: "3"
