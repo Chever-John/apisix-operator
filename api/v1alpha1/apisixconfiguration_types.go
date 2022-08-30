@@ -29,13 +29,25 @@ type APISIXConfigurationSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of APISIXConfiguration. Edit apisixconfiguration_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Foo string `json:"foo,omitempty"`
+
+	// +optional
+	DataPlaneDeploymentOptions *DataPlaneDeploymentOptions `json:"dataPlaneDeploymentOptions,omitempty"`
+
+	// +optional
+	ControlPlaneDeploymentOptions *ControlPlaneDeploymentOptions `json:"controlPlaneDeploymentOptions,omitempty"`
 }
 
 // APISIXConfigurationStatus defines the observed state of APISIXConfiguration
 type APISIXConfigurationStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// +optional
+	// +listType=map
+	// +listMapKey=type
+	// +kubebuilder:validation:MaxItems=8
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
 //+kubebuilder:object:root=true
@@ -61,4 +73,14 @@ type APISIXConfigurationList struct {
 
 func init() {
 	SchemeBuilder.Register(&APISIXConfiguration{}, &APISIXConfigurationList{})
+}
+
+func (g *APISIXConfiguration) GetConditions() []metav1.Condition {
+	return g.Status.Conditions
+
+}
+
+func (g *APISIXConfiguration) SetConditions(conditions []metav1.Condition) {
+	g.Status.Conditions = conditions
+
 }

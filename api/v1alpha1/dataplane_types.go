@@ -25,21 +25,31 @@ import (
 
 // DataPlaneSpec defines the desired state of DataPlane
 type DataPlaneSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	DataPlaneDeploymentOptions `json:",inline"`
+}
 
-	// Foo is an example field of DataPlane. Edit dataplane_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+type DataPlaneDeploymentOptions struct {
+	DeploymentOptions `json:",inline"`
 }
 
 // DataPlaneStatus defines the observed state of DataPlane
 type DataPlaneStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +listType=map
+	// +listMapKey=type
+	// +kubebuilder:validation:MinItems=1
+	// +kubebuilder:validation:MaxItems=8
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
+
+	Service string `json:"service,omitempty"`
 }
 
+//+genclient
+//+k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:resource:shortName=kdp,categories=apisix;all
+//+kubebuilder:printcolumn:name="Ready",description="The Resource is ready",type=string,JSONPath=`.status.conditions[?(@.type=='Ready')].status`
+//+kubebuilder:printcolumn:name="Provisioned",description="The Resource is provisioned",type=string,JSONPath=`.status.conditions[?(@.type=='Provisioned')].status`
 
 // DataPlane is the Schema for the dataplanes API
 type DataPlane struct {
@@ -61,4 +71,14 @@ type DataPlaneList struct {
 
 func init() {
 	SchemeBuilder.Register(&DataPlane{}, &DataPlaneList{})
+}
+
+func (d *DataPlane) GetConditions() []metav1.Condition {
+	return d.Status.Conditions
+
+}
+
+func (d *DataPlane) SetConditions(conditions []metav1.Condition) {
+	d.Status.Conditions = conditions
+
 }
