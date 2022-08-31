@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	"runtime/debug"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -30,7 +31,9 @@ import (
 // ControlPlaneReconciler reconciles a ControlPlane object
 type ControlPlaneReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	Scheme                   *runtime.Scheme
+	ClusterCASecretName      string
+	ClusterCASecretNamespace string
 }
 
 //+kubebuilder:rbac:groups=apisix-operator.apisix-operator.apisix.apache.org,resources=controlplanes,verbs=get;list;watch;create;update;patch;delete
@@ -47,7 +50,10 @@ type ControlPlaneReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.2/pkg/reconcile
 func (r *ControlPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := log.FromContext(ctx).WithName("ControlPlane")
+
+	debug(log, "reconciling ControlPlane resource", req)
+	
 
 	// TODO(user): your logic here
 
