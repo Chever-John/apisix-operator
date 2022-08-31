@@ -31,3 +31,55 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - controlplanes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - controlplanes/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - controlplanes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - dataplanes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - dataplanes/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - apisix-operator.apisix-operator.apisix.apache.org
+  resources:
+  - dataplanes/status
+  verbs:
+  - get
+  - patch
+  - update
