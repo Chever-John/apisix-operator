@@ -31,7 +31,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/api/v1alpha1"
 	"github.com/chever-john/apisix-operator/controllers"
 	//+kubebuilder:scaffold:imports
 )

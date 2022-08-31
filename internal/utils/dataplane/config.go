@@ -6,7 +6,6 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
-	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	k8sutils "github.com/chever-john/apisix-operator/internal/utils/kubernetes"
 )
 
@@ -55,7 +54,6 @@ var APISIXDefaults = map[string]string{
 	"APISIX_PROXY_LISTEN":           fmt.Sprintf("0.0.0.0:%d reuseport backlog=16384, 0.0.0.0:%d http2 ssl reuseport backlog=16384", DefaultAPISIXHTTPPort, DefaultAPISIXHTTPSPort),
 	"APISIX_STATUS_LISTEN":          fmt.Sprintf("0.0.0.0:%d", DefaultAPISIXStatusPort),
 
-	
 	"APISIX_ADMIN_LISTEN": fmt.Sprintf("0.0.0.0:%d ssl reuseport backlog=16384", DefaultAPISIXAdminPort),
 
 	// MTLS

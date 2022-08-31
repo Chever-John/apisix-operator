@@ -9,7 +9,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	gatewayv1alpha2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
 
-	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	"github.com/chever-john/apisix-operator/internal/consts"
 	operatorerrors "github.com/chever-john/apisix-operator/internal/errors"
 	k8sutils "github.com/chever-john/apisix-operator/internal/utils/kubernetes"
@@ -90,13 +89,13 @@ func ListControlPlanesForGateway(
 func GetDataPlaneForControlPlane(
 	ctx context.Context,
 	c client.Client,
-	controlplane *operatorv1alpha1.ControlPlane,
-) (*operatorv1alpha1.DataPlane, error) {
+	controlplane *apisixoperatorv1alpha1.ControlPlane,
+) (*apisixoperatorv1alpha1.DataPlane, error) {
 	if controlplane.Spec.DataPlane == nil || *controlplane.Spec.DataPlane == "" {
 		return nil, fmt.Errorf("%w, controlplane = %s/%s", operatorerrors.ErrDataPlaneNotSet, controlplane.Namespace, controlplane.Name)
 	}
 
-	dataplane := operatorv1alpha1.DataPlane{}
+	dataplane := apisixoperatorv1alpha1.DataPlane{}
 	if err := c.Get(ctx, types.NamespacedName{Namespace: controlplane.Namespace, Name: *controlplane.Spec.DataPlane}, &dataplane); err != nil {
 		return nil, err
 	}
@@ -107,7 +106,7 @@ func GetDataPlaneForControlPlane(
 func GetDataplaneServiceName(
 	ctx context.Context,
 	c client.Client,
-	dataplane *operatorv1alpha1.DataPlane,
+	dataplane *apisixoperatorv1alpha1.DataPlane,
 ) (string, error) {
 	services, err := k8sutils.ListServicesForOwner(ctx,
 		c,
