@@ -6,6 +6,7 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	k8sutils "github.com/chever-john/apisix-operator/internal/utils/kubernetes"
 )
 
