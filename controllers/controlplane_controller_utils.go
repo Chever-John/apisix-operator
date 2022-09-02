@@ -270,7 +270,7 @@ func generateNewDeploymentForControlPlane(controlplane *apisixoperatorv1alpha1.C
 									Command: []string{
 										"/bin/sh",
 										"-c",
-										"kong quit",
+										"apisix quit",
 									},
 								},
 							},
