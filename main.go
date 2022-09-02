@@ -32,6 +32,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	"github.com/chever-john/apisix-operator/controllers"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	//+kubebuilder:scaffold:imports
 )
 

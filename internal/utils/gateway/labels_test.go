@@ -7,6 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/chever-john/apisix-operator/internal/consts"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 func TestLabelObjForGateway(t *testing.T) {

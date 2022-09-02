@@ -21,6 +21,7 @@ import (
 
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -33,6 +34,9 @@ import (
 type DataPlaneReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
+	eventRecorder record.EventRecorder
+	ClusterCASecretName string
+	ClusterCASecretNamespace string
 }
 
 //+kubebuilder:rbac:groups=apisix-operator.apisix-operator.apisix.apache.org,resources=dataplanes,verbs=get;list;watch;create;update;patch;delete
@@ -67,14 +71,29 @@ func (r *DataPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	// TODO(user): your logic here
 	debug(log, "validating DataPlane resource condition", dataplane)
 
-	if r.ensureIsMarkedScheduled(dataplane) {
-		err := r.updateStatus(ctx, dataplane)
-		if err != nil {
-			debug(log, "exposing DataPlane deployment via service", dataplane)
-		}
+  if r.ensureIsMarkedScheduled(dataplane) {
+    err := r.updateStatus(ctx, dataplane)
+
+    if err != nil {
+      debug(log, "unable to update DataPlane resource", dataplane)
+    }
+    return ctrl.Result{}, err
+  }
+
+  debug(log, "exposing DataPlane deployment via service", dataplane)
+  createdOrUpdated, dataplaneService, err := r.ensureServiceForDataPlane(ctx, dataplane)
+
+	if err!= nil {
+		return ctrl.Result{}, err
 	}
 
-	return ctrl.Result{}, nil
+	if createdOrUpdated {
+		return ctrl.Result{}, r.ensureDataPlaneServiceStatus(ctx, dataplane, dataplaneService.Name)
+	}
+
+
+	return ctrl.Result{}, err
+
 }
 func (r *DataPlaneReconciler) updateStatus(ctx context.Context, updated *apisixoperatorv1alpha1.DataPlane) error  {
 	current := &apisixoperatorv1alpha1.DataPlane{}

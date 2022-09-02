@@ -12,6 +12,7 @@ import (
 	"github.com/chever-john/apisix-operator/internal/consts"
 	operatorerrors "github.com/chever-john/apisix-operator/internal/errors"
 	k8sutils "github.com/chever-john/apisix-operator/internal/utils/kubernetes"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 // -----------------------------------------------------------------------------

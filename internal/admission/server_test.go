@@ -18,6 +18,7 @@ import (
 	fakeclient "sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	"github.com/chever-john/apisix-operator/internal/consts"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 func TestHandleDataplaneValidation(t *testing.T) {
@@ -77,7 +78,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "off",
 								},
 							},
@@ -99,7 +100,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "",
 								},
 							},
@@ -121,7 +122,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "postgres",
 								},
 							},
@@ -144,7 +145,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "xxx",
 								},
 							},
@@ -167,7 +168,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-cm"},
@@ -194,7 +195,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										SecretKeyRef: &corev1.SecretKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret"},

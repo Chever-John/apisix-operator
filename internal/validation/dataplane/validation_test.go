@@ -12,6 +12,7 @@ import (
 	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 
 	"github.com/chever-john/apisix-operator/internal/consts"
+	
 )
 
 func TestValidateDeployOptions(t *testing.T) {
@@ -67,7 +68,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "off",
 								},
 							},
@@ -89,7 +90,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "",
 								},
 							},
@@ -111,7 +112,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "postgres",
 								},
 							},
@@ -134,7 +135,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "xxx",
 								},
 							},
@@ -157,7 +158,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-cm"},
@@ -184,7 +185,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										SecretKeyRef: &corev1.SecretKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret"},

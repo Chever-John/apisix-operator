@@ -4,6 +4,7 @@ import (
 	"context"
 
 	dataplanevalidation "github.com/chever-john/apisix-operator/internal/validation/dataplane"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 type validator struct {

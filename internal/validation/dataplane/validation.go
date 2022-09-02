@@ -11,6 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/chever-john/apisix-operator/internal/consts"
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 // Validator validates DataPlane objects.
@@ -65,7 +66,7 @@ func (v *Validator) getDBModeFromEnv(namespace string, envs []corev1.EnvVar) (st
 	dbModeFound := false
 	for _, envVar := range envs {
 		// use the last appearance of the same key as the result since k8s takes this precedence.
-		if envVar.Name == consts.EnvVarKongDatabase {
+		if envVar.Name == consts.EnvVarApisixDatabase {
 			// value is non-empty.
 			if envVar.Value != "" {
 				dbMode = envVar.Value
@@ -98,7 +99,7 @@ func (v *Validator) getDBModeFromEnvFrom(namespace string, envFroms []corev1.Env
 	for _, envFrom := range envFroms {
 		// if the envFrom.Prefix is the prefix of KONG_DATABASE,
 		// it is possible that this envFrom contains values of KONG_DATABASE.
-		if strings.HasPrefix(consts.EnvVarKongDatabase, envFrom.Prefix) {
+		if strings.HasPrefix(consts.EnvVarApisixDatabase, envFrom.Prefix) {
 			if envFrom.ConfigMapRef != nil {
 				var err error
 				dbMode, dbModeFound, err = v.getDBModeFromConfigMapRef(namespace, envFrom.Prefix, envFrom.ConfigMapRef)
@@ -165,7 +166,7 @@ func (v *Validator) getDBModeFromConfigMapRef(namespace string, prefix string, c
 	}
 
 	// find the key in the Data that would become `KONG_DATABASE` after concatenation with the prefix.
-	suffix := strings.TrimPrefix(consts.EnvVarKongDatabase, prefix)
+	suffix := strings.TrimPrefix(consts.EnvVarApisixDatabase, prefix)
 	dbMode, ok := cm.Data[suffix]
 	return dbMode, ok, nil
 }
@@ -181,7 +182,7 @@ func (v *Validator) getDBModeFromSecretRef(namespace string, prefix string, secr
 		return "", false, nil
 	}
 
-	suffix := strings.TrimPrefix(consts.EnvVarKongDatabase, prefix)
+	suffix := strings.TrimPrefix(consts.EnvVarApisixDatabase, prefix)
 	value, ok := secret.Data[suffix]
 	if !ok {
 		return "", false, nil
