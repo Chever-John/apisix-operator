@@ -26,7 +26,7 @@ func generateNewDeploymentForDataPlane(dataplane *apisixoperatorv1alpha1.DataPla
 			dataplaneImage = fmt.Sprintf("%s:%s", dataplaneImage, *dataplane.Spec.Version)
 		}
 	} else {
-		dataplaneImage = consts.DefaultDataPlaneImage 
+		dataplaneImage = consts.DefaultDataPlaneImage
 	}
 
 	deployment := &appsv1.Deployment{

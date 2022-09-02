@@ -12,7 +12,6 @@ import (
 	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 
 	"github.com/chever-john/apisix-operator/internal/consts"
-	
 )
 
 func TestValidateDeployOptions(t *testing.T) {

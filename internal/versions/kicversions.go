@@ -21,7 +21,7 @@ var (
 	// the release 5.0, a new entry '">=5.0": "5.0"' should be added to this map, and the previous most
 	// updated entry should be limited to "<5.0".
 	RoleVersionsForKICVersions = map[string]string{
-		">=2.4":      "2.5", 
+		">=2.4":      "2.5",
 		">=2.3,<2.4": "2.3",
 		">=2.2,<2.3": "2.2",
 		">=2.1,<2.2": "2.1",

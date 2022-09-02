@@ -33,9 +33,9 @@ import (
 // DataPlaneReconciler reconciles a DataPlane object
 type DataPlaneReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
-	eventRecorder record.EventRecorder
-	ClusterCASecretName string
+	Scheme                   *runtime.Scheme
+	eventRecorder            record.EventRecorder
+	ClusterCASecretName      string
 	ClusterCASecretNamespace string
 }
 
@@ -57,9 +57,9 @@ type DataPlaneReconciler struct {
 func (r *DataPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := log.FromContext(ctx).WithName("DataPlane")
 
-	debug(log, "reconciling DataPlane resource",req)
-	
-	dataplane := new(apisixoperatorv1alpha1.DataPlane) 
+	debug(log, "reconciling DataPlane resource", req)
+
+	dataplane := new(apisixoperatorv1alpha1.DataPlane)
 	if err := r.Client.Get(ctx, req.NamespacedName, dataplane); err != nil {
 		if k8serrors.IsNotFound(err) {
 			return ctrl.Result{}, nil
@@ -71,19 +71,19 @@ func (r *DataPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	// TODO(user): your logic here
 	debug(log, "validating DataPlane resource condition", dataplane)
 
-  if r.ensureIsMarkedScheduled(dataplane) {
-    err := r.updateStatus(ctx, dataplane)
+	if r.ensureIsMarkedScheduled(dataplane) {
+		err := r.updateStatus(ctx, dataplane)
 
-    if err != nil {
-      debug(log, "unable to update DataPlane resource", dataplane)
-    }
-    return ctrl.Result{}, err
-  }
+		if err != nil {
+			debug(log, "unable to update DataPlane resource", dataplane)
+		}
+		return ctrl.Result{}, err
+	}
 
-  debug(log, "exposing DataPlane deployment via service", dataplane)
-  createdOrUpdated, dataplaneService, err := r.ensureServiceForDataPlane(ctx, dataplane)
+	debug(log, "exposing DataPlane deployment via service", dataplane)
+	createdOrUpdated, dataplaneService, err := r.ensureServiceForDataPlane(ctx, dataplane)
 
-	if err!= nil {
+	if err != nil {
 		return ctrl.Result{}, err
 	}
 
@@ -91,11 +91,10 @@ func (r *DataPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{}, r.ensureDataPlaneServiceStatus(ctx, dataplane, dataplaneService.Name)
 	}
 
-
 	return ctrl.Result{}, err
 
 }
-func (r *DataPlaneReconciler) updateStatus(ctx context.Context, updated *apisixoperatorv1alpha1.DataPlane) error  {
+func (r *DataPlaneReconciler) updateStatus(ctx context.Context, updated *apisixoperatorv1alpha1.DataPlane) error {
 	current := &apisixoperatorv1alpha1.DataPlane{}
 
 	err := r.Client.Get(ctx, client.ObjectKeyFromObject(updated), current)
@@ -116,4 +115,3 @@ func (r *DataPlaneReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&apisixoperatorv1alpha1.DataPlane{}).
 		Complete(r)
 }
-

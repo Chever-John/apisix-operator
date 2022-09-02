@@ -199,7 +199,7 @@ func maybeCreateCertificateSecret(ctx context.Context,
 	// TODO This creates certificates that last for 10 years as an arbitrarily long period for the alpha. A production-
 	// ready implementation should use a shorter lifetime and rotate certificates. Rotation requires some mechanism to
 	// recognize that certificates have expired (ideally without permissions to read Secrets across the cluster) and
-	// to get Deployments to acknowledge them. 
+	// to get Deployments to acknowledge them.
 	expiration := int32(315400000)
 
 	csr := certificatesv1.CertificateSigningRequest{

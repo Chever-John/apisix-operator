@@ -3,8 +3,8 @@ package admission
 import (
 	"context"
 
-	dataplanevalidation "github.com/chever-john/apisix-operator/internal/validation/dataplane"
 	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
+	dataplanevalidation "github.com/chever-john/apisix-operator/internal/validation/dataplane"
 )
 
 type validator struct {

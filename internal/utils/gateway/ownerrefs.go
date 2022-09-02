@@ -9,10 +9,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	gatewayv1alpha2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
 
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	"github.com/chever-john/apisix-operator/internal/consts"
 	operatorerrors "github.com/chever-john/apisix-operator/internal/errors"
 	k8sutils "github.com/chever-john/apisix-operator/internal/utils/kubernetes"
-	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 )
 
 // -----------------------------------------------------------------------------
