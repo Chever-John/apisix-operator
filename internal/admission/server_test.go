@@ -17,6 +17,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	fakeclient "sigs.k8s.io/controller-runtime/pkg/client/fake"
 
+	apisixoperatorv1alpha1 "github.com/chever-john/apisix-operator/apis/v1alpha1"
 	"github.com/chever-john/apisix-operator/internal/consts"
 )
 
@@ -42,7 +43,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 			// fake client does not encode fields in StringData to Data,
 			// so here we should usebase64 encoded value in Data.
 			Data: map[string]string{
-				"KONG_DATABASE": "xxx",
+				"APISIX_DATABASE": "xxx",
 			},
 		},
 		&corev1.Secret{
@@ -77,7 +78,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "off",
 								},
 							},
@@ -99,7 +100,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "",
 								},
 							},
@@ -121,7 +122,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "postgres",
 								},
 							},
@@ -144,7 +145,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "xxx",
 								},
 							},
@@ -167,7 +168,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-cm"},
@@ -194,7 +195,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										SecretKeyRef: &corev1.SecretKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret"},
@@ -247,7 +248,7 @@ func TestHandleDataplaneValidation(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							EnvFrom: []corev1.EnvFromSource{
 								{
-									Prefix: "KONG_",
+									Prefix: "APISIX_",
 									SecretRef: &corev1.SecretEnvSource{
 										LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret-2"},
 									},

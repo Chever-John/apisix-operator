@@ -36,7 +36,7 @@ func TestValidateDeployOptions(t *testing.T) {
 			// fake client does not encode fields in StringData to Data,
 			// so here we should usebase64 encoded value in Data.
 			Data: map[string]string{
-				"KONG_DATABASE": "xxx",
+				"APISIX_DATABASE": "xxx",
 			},
 		},
 		&corev1.Secret{
@@ -67,7 +67,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "off",
 								},
 							},
@@ -89,7 +89,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "",
 								},
 							},
@@ -111,7 +111,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "postgres",
 								},
 							},
@@ -134,7 +134,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name:  consts.EnvVarKongDatabase,
+									Name:  consts.EnvVarApisixDatabase,
 									Value: "xxx",
 								},
 							},
@@ -157,7 +157,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										ConfigMapKeyRef: &corev1.ConfigMapKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-cm"},
@@ -184,7 +184,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							Env: []corev1.EnvVar{
 								{
-									Name: consts.EnvVarKongDatabase,
+									Name: consts.EnvVarApisixDatabase,
 									ValueFrom: &corev1.EnvVarSource{
 										SecretKeyRef: &corev1.SecretKeySelector{
 											LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret"},
@@ -237,7 +237,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							EnvFrom: []corev1.EnvFromSource{
 								{
-									Prefix: "KONG_",
+									Prefix: "APISIX_",
 									SecretRef: &corev1.SecretEnvSource{
 										LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret-2"},
 									},
