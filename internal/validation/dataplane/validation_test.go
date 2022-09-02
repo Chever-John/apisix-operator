@@ -37,7 +37,7 @@ func TestValidateDeployOptions(t *testing.T) {
 			// fake client does not encode fields in StringData to Data,
 			// so here we should usebase64 encoded value in Data.
 			Data: map[string]string{
-				"KONG_DATABASE": "xxx",
+				"APISIX_DATABASE": "xxx",
 			},
 		},
 		&corev1.Secret{
@@ -238,7 +238,7 @@ func TestValidateDeployOptions(t *testing.T) {
 						DeploymentOptions: apisixoperatorv1alpha1.DeploymentOptions{
 							EnvFrom: []corev1.EnvFromSource{
 								{
-									Prefix: "KONG_",
+									Prefix: "APISIX_",
 									SecretRef: &corev1.SecretEnvSource{
 										LocalObjectReference: corev1.LocalObjectReference{Name: "test-secret-2"},
 									},

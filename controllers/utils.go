@@ -176,7 +176,7 @@ func maybeCreateCertificateSecret(ctx context.Context,
 	template := x509.CertificateRequest{
 		Subject: pkix.Name{
 			CommonName:   subject,
-			Organization: []string{"Kong, Inc."},
+			Organization: []string{"Apisix, Inc."},
 			Country:      []string{"US"},
 		},
 		SignatureAlgorithm: x509.ECDSAWithSHA256,
@@ -195,12 +195,11 @@ func maybeCreateCertificateSecret(ctx context.Context,
 
 	// This is effectively a placeholder so long as we handle signing internally. When actually creating CSR resources,
 	// this string is used by signers to filter which resources they pay attention to
-	signerName := "gateway-operator.konghq.com/mtls"
+	signerName := "apisix-operator.apisix.apache.org/mtls"
 	// TODO This creates certificates that last for 10 years as an arbitrarily long period for the alpha. A production-
 	// ready implementation should use a shorter lifetime and rotate certificates. Rotation requires some mechanism to
 	// recognize that certificates have expired (ideally without permissions to read Secrets across the cluster) and
-	// to get Deployments to acknowledge them. For Kong, this requires a restart, as there's no way to force a reload
-	// of updated files on disk.
+	// to get Deployments to acknowledge them. 
 	expiration := int32(315400000)
 
 	csr := certificatesv1.CertificateSigningRequest{

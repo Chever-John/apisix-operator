@@ -61,23 +61,23 @@ func setControlPlaneDefaults(
 				changed = true
 			}
 		}
-		if _, isOverrideDisabled := dontOverride["CONTROLLER_KONG_ADMIN_URL"]; !isOverrideDisabled {
-			kongAdminURL := controllerKongAdminURL(dataplaneServiceName, namespace)
-			if envValueByName(spec.Env, "CONTROLLER_KONG_ADMIN_URL") != kongAdminURL {
-				spec.Env = updateEnv(spec.Env, "CONTROLLER_KONG_ADMIN_URL", kongAdminURL)
+		if _, isOverrideDisabled := dontOverride["CONTROLLER_APISIX_ADMIN_URL"]; !isOverrideDisabled {
+			apisixAdminURL := controllerApisixAdminURL(dataplaneServiceName, namespace)
+			if envValueByName(spec.Env, "CONTROLLER_APISIX_ADMIN_URL") != apisixAdminURL {
+				spec.Env = updateEnv(spec.Env, "CONTROLLER_APISIX_ADMIN_URL", apisixAdminURL)
 				changed = true
 			}
 		}
 	}
 
-	if _, isOverrideDisabled := dontOverride["CONTROLLER_KONG_ADMIN_TLS_CLIENT_CERT_FILE"]; !isOverrideDisabled {
-		spec.Env = updateEnv(spec.Env, "CONTROLLER_KONG_ADMIN_TLS_CLIENT_CERT_FILE", "/var/cluster-certificate/tls.crt")
+	if _, isOverrideDisabled := dontOverride["CONTROLLER_APISIX_ADMIN_TLS_CLIENT_CERT_FILE"]; !isOverrideDisabled {
+		spec.Env = updateEnv(spec.Env, "CONTROLLER_APISIX_ADMIN_TLS_CLIENT_CERT_FILE", "/var/cluster-certificate/tls.crt")
 	}
-	if _, isOverrideDisabled := dontOverride["CONTROLLER_KONG_ADMIN_TLS_CLIENT_KEY_FILE"]; !isOverrideDisabled {
-		spec.Env = updateEnv(spec.Env, "CONTROLLER_KONG_ADMIN_TLS_CLIENT_KEY_FILE", "/var/cluster-certificate/tls.key")
+	if _, isOverrideDisabled := dontOverride["CONTROLLER_APISIX_ADMIN_TLS_CLIENT_KEY_FILE"]; !isOverrideDisabled {
+		spec.Env = updateEnv(spec.Env, "CONTROLLER_APISIX_ADMIN_TLS_CLIENT_KEY_FILE", "/var/cluster-certificate/tls.key")
 	}
-	if _, isOverrideDisabled := dontOverride["CONTROLLER_KONG_ADMIN_CA_CERT_FILE"]; !isOverrideDisabled {
-		spec.Env = updateEnv(spec.Env, "CONTROLLER_KONG_ADMIN_CA_CERT_FILE", "/var/cluster-certificate/ca.crt")
+	if _, isOverrideDisabled := dontOverride["CONTROLLER_APISIX_ADMIN_CA_CERT_FILE"]; !isOverrideDisabled {
+		spec.Env = updateEnv(spec.Env, "CONTROLLER_APISIX_ADMIN_CA_CERT_FILE", "/var/cluster-certificate/ca.crt")
 	}
 
 	return changed
@@ -97,9 +97,9 @@ func setControlPlaneEnvOnDataPlaneChange(
 			spec.Env = updateEnv(spec.Env, "CONTROLLER_PUBLISH_SERVICE", newPublishServiceValue)
 			changed = true
 		}
-		newKongAdminURL := controllerKongAdminURL(dataplaneServiceName, namespace)
-		if envValueByName(spec.Env, "CONTROLLER_KONG_ADMIN_URL") != newKongAdminURL {
-			spec.Env = updateEnv(spec.Env, "CONTROLLER_KONG_ADMIN_URL", newKongAdminURL)
+		newApisixAdminURL := controllerApisixAdminURL(dataplaneServiceName, namespace)
+		if envValueByName(spec.Env, "CONTROLLER_APISIX_ADMIN_URL") != newApisixAdminURL {
+			spec.Env = updateEnv(spec.Env, "CONTROLLER_APISIX_ADMIN_URL", newApisixAdminURL)
 			changed = true
 		}
 	} else {
@@ -107,8 +107,8 @@ func setControlPlaneEnvOnDataPlaneChange(
 			spec.Env = rejectEnvByName(spec.Env, "CONTROLLER_PUBLISH_SERVICE")
 			changed = true
 		}
-		if envValueByName(spec.Env, "CONTROLLER_KONG_ADMIN_URL") != "" {
-			spec.Env = rejectEnvByName(spec.Env, "CONTROLLER_KONG_ADMIN_URL")
+		if envValueByName(spec.Env, "CONTROLLER_APISIX_ADMIN_URL") != "" {
+			spec.Env = rejectEnvByName(spec.Env, "CONTROLLER_APISIX_ADMIN_URL")
 			changed = true
 		}
 	}
@@ -116,7 +116,7 @@ func setControlPlaneEnvOnDataPlaneChange(
 	return changed
 }
 
-func controllerKongAdminURL(dataplaneName, dataplaneNamespace string) string {
+func controllerApisixAdminURL(dataplaneName, dataplaneNamespace string) string {
 	return fmt.Sprintf("https://%s.%s.svc:%d",
 		dataplaneName, dataplaneNamespace, dataplaneutils.DefaultAPISIXAdminPort)
 }

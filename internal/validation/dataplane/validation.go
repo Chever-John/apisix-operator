@@ -97,8 +97,8 @@ func (v *Validator) getDBModeFromEnvFrom(namespace string, envFroms []corev1.Env
 	dbMode := ""
 	dbModeFound := false
 	for _, envFrom := range envFroms {
-		// if the envFrom.Prefix is the prefix of KONG_DATABASE,
-		// it is possible that this envFrom contains values of KONG_DATABASE.
+		// if the envFrom.Prefix is the prefix of APISIX_DATABASE,
+		// it is possible that this envFrom contains values of APISIX_DATABASE.
 		if strings.HasPrefix(consts.EnvVarApisixDatabase, envFrom.Prefix) {
 			if envFrom.ConfigMapRef != nil {
 				var err error
@@ -165,7 +165,7 @@ func (v *Validator) getDBModeFromConfigMapRef(namespace string, prefix string, c
 		return "", false, nil
 	}
 
-	// find the key in the Data that would become `KONG_DATABASE` after concatenation with the prefix.
+	// find the key in the Data that would become `APISIX_DATABASE` after concatenation with the prefix.
 	suffix := strings.TrimPrefix(consts.EnvVarApisixDatabase, prefix)
 	dbMode, ok := cm.Data[suffix]
 	return dbMode, ok, nil
