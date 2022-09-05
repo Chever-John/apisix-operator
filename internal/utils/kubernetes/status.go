@@ -7,7 +7,7 @@ import (
 // ConditionType literal that defines the different types of condition
 type ConditionType string
 
-// CoditionReason literal to enumerate a specific condition reason
+// ConditionReason literal to enumerate a specific condition reason
 type ConditionReason string
 
 const (
