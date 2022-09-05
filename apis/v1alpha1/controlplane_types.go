@@ -87,3 +87,11 @@ type ControlPlaneList struct {
 func init() {
 	SchemeBuilder.Register(&ControlPlane{}, &ControlPlaneList{})
 }
+
+func (c *ControlPlane) GetCondition() []metav1.Condition  {
+	return c.Status.Conditions
+}
+
+func (c *ControlPlane) SetCondition(conditions []metav1.Condition)  {
+	c.Status.Conditions = conditions
+}
